@@ -1,0 +1,36 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    android:orientation="vertical" >
+
+
+<TextView
+android:id="@+id/tvID"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="ID"/>
+
+    <TextView
+        android:id="@+id/tvImageID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ImageID"/>
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"/>
+    <TextView
+        android:id="@+id/tvUserID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UserID"/>
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UserName"/>
+
+</LinearLayout>
