@@ -15,6 +15,18 @@ public class Users {
     public Users() {
 
     }
+
+    public Users(String ID, String ImageID, String Title, String UserID,
+                  String UserName) {
+        super();
+        this.ID = ID;
+        this.ImageID = ImageID;
+        this.Title = Title;
+        this.UserID = UserID;
+        this.UserName = UserName;
+
+    }
+
     public String getID() {
         return ID;
     }

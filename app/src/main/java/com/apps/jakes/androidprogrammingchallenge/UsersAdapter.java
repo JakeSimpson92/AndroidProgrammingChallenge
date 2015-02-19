@@ -8,49 +8,53 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class UsersAdapter extends ArrayAdapter<Users> {
 
-    ArrayList<Users> ArrylistUsers;
+    ArrayList<Users> userlist;
     int Resource;
-    Context context;
     LayoutInflater vi;
+    ViewHolder holder;
 
     public UsersAdapter(Context context, int resource, ArrayList<Users> objects) {
         super(context, resource, objects);
-
-        ArrylistUsers = objects;
-        Resource = resource;
-        this.context = context;
-
         vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        userlist = objects;
+        Resource = resource;
+
+
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder;
-        if(convertView == null){
-            convertView = vi.inflate(Resource, null);
-            holder = new ViewHolder();
-            holder.tvID = (TextView)convertView.findViewById(R.id.tvID);
-            holder.tvImageID = (TextView)convertView.findViewById(R.id.tvImageID);
-            holder.tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
-            holder.tvUserID = (TextView)convertView.findViewById(R.id.tvUserID);
-            holder.tvUserName = (TextView)convertView.findViewById(R.id.tvUserName);
 
-            convertView.setTag(holder);
+        View v = convertView;
+        if(v == null){
+            holder = new ViewHolder();
+            v = vi.inflate(Resource, null);
+            holder = new ViewHolder();
+            holder.tvID = (TextView)v.findViewById(R.id.tvID);
+            holder.tvImageID = (TextView)v.findViewById(R.id.tvImageID);
+            holder.tvTitle = (TextView)v.findViewById(R.id.tvTitle);
+            holder.tvUserID = (TextView)v.findViewById(R.id.tvUserID);
+            holder.tvUserName = (TextView)v.findViewById(R.id.tvUserName);
+
+            v.setTag(holder);
         } else {
-            holder = (ViewHolder)convertView.getTag();
+            holder = (ViewHolder)v.getTag();
 
         }
 
+        holder.tvID.setText(userlist.get(position).getID());
+        holder.tvImageID.setText(userlist.get(position).getImageID());
+        holder.tvTitle.setText(userlist.get(position).getTitle());
+        holder.tvUserID.setText(userlist.get(position).getUserID());
+        holder.tvUserName.setText(userlist.get(position).getUserName());
 
 
-
-    return convertView;
+    return v;
 
     }
 

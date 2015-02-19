@@ -1,18 +1,20 @@
 package com.apps.jakes.androidprogrammingchallenge;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
+
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -23,9 +25,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
-    ListView list;
+
     UsersAdapter adapter;
     ArrayList<Users> usersList;
 
@@ -34,31 +36,54 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        list = (ListView)findViewById(R.id.list);
         usersList = new ArrayList<Users>();
-
         new UsersAsynTask().execute("http://challenge.superfling.com/");
+        ListView listview = (ListView)findViewById(R.id.list);
+        adapter = new UsersAdapter(getApplicationContext(), R.layout.row, usersList);
+
+        listview.setAdapter(adapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+                Toast.makeText(getApplicationContext(), usersList.get(position).getID(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 
-    public class UsersAsynTask extends AsyncTask<String, Void, Boolean>{
+    class UsersAsynTask extends AsyncTask<String, Void, Boolean>{
+
+        ProgressDialog dialog;
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected void onPreExecute(){
+            super.onPreExecute();
+            dialog = new ProgressDialog(MainActivity.this);
+            dialog.setMessage("Loading");
+            dialog.setTitle("connecting server");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+        @Override
+        protected Boolean doInBackground(String... urls) {
             try {
+                HttpGet post = new HttpGet(urls[0]);
                 HttpClient client = new DefaultHttpClient();
-                HttpPost post = new HttpPost(params[0]);
                 HttpResponse response = client.execute(post);
                 int status = response.getStatusLine().getStatusCode();
                 if(status == 200){
                     HttpEntity entity = response.getEntity();
                     String data = EntityUtils.toString(entity);
 
-                    JSONArray jObj = new JSONArray(data);
-                    for(int i=0; i<jObj.length(); i++){
-                        Users user = new Users();
-                        JSONObject jRealObject = jObj.getJSONObject(i);
+                    //System.out.println("Here is the data:" + data);
 
+                    JSONArray jsono = new JSONArray(data);
+                    //JSONArray jObj = jsono.getJSONArray("");
+                    for(int i=0; i<jsono.length(); i++){
+
+                        JSONObject jRealObject = jsono.getJSONObject(i);
+                        Users user = new Users();
                         user.setID(jRealObject.getString("ID"));
                         user.setImageID(jRealObject.getString("ImageID"));
                         user.setTitle(jRealObject.getString("Title"));
@@ -84,12 +109,11 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(Boolean result){
-            super.onPostExecute(result);
-            if(result == false){
-                //show msg that data not pasrsed
+            dialog.cancel();
+            adapter.notifyDataSetChanged();
+            if(!result){
+                Toast.makeText(getApplicationContext(), "Unable to fetch data from server", Toast.LENGTH_LONG).show();
             }
-            UsersAdapter user = new UsersAdapter(getApplicationContext(), R.layout.row, usersList);
-            list.setAdapter(adapter);
 
         }
     }
