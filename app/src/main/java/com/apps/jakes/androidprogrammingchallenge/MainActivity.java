@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         usersList = new ArrayList<Users>();
         new UsersAsynTask().execute("http://challenge.superfling.com/");
+        sqllite db = new sqllite(this);
         ListView listview = (ListView)findViewById(R.id.list);
         adapter = new UsersAdapter(getApplicationContext(), R.layout.row, usersList);
 
@@ -48,7 +49,7 @@ public class MainActivity extends Activity {
                 Toast.makeText(getApplicationContext(), usersList.get(position).getID(), Toast.LENGTH_LONG).show();
             }
         });
-
+        //db.addUser(new User(usersList.get()));
 
     }
 
@@ -67,6 +68,7 @@ public class MainActivity extends Activity {
         }
         @Override
         protected Boolean doInBackground(String... urls) {
+
             try {
                 HttpGet post = new HttpGet(urls[0]);
                 HttpClient client = new DefaultHttpClient();
@@ -79,7 +81,7 @@ public class MainActivity extends Activity {
                     //System.out.println("Here is the data:" + data);
 
                     JSONArray jsono = new JSONArray(data);
-                    //JSONArray jObj = jsono.getJSONArray("");
+
                     for(int i=0; i<jsono.length(); i++){
 
                         JSONObject jRealObject = jsono.getJSONObject(i);
@@ -91,6 +93,7 @@ public class MainActivity extends Activity {
                         user.setUserName(jRealObject.getString("UserName"));
 
                         usersList.add(user);
+
                     }
 
                     return true;
