@@ -23,13 +23,16 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends Activity {
 
 
     UsersAdapter adapter;
-    ArrayList<Users> usersList;
+    List<Users> usersList;
+    SQLite  sqlite;
+
 
 
     @Override
@@ -37,8 +40,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         usersList = new ArrayList<Users>();
+        sqlite = new SQLite(this, this);
         new UsersAsynTask().execute("http://challenge.superfling.com/");
-        sqllite db = new sqllite(this);
+        //sqllite db = new sqllite(this);
         ListView listview = (ListView)findViewById(R.id.list);
         adapter = new UsersAdapter(getApplicationContext(), R.layout.row, usersList);
 
@@ -95,7 +99,7 @@ public class MainActivity extends Activity {
                         usersList.add(user);
 
                     }
-
+                    //sqlite.addUser(usersList);
                     return true;
                 }
 
@@ -107,7 +111,7 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             }
 
-            return false;
+            return null;
         }
 
         @Override
@@ -117,7 +121,7 @@ public class MainActivity extends Activity {
             if(!result){
                 Toast.makeText(getApplicationContext(), "Unable to fetch data from server", Toast.LENGTH_LONG).show();
             }
-
+           sqlite.addUser(usersList);
         }
     }
 

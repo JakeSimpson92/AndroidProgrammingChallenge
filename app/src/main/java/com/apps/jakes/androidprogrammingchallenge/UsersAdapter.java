@@ -14,17 +14,18 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class UsersAdapter extends ArrayAdapter<Users> {
 
-    ArrayList<Users> userlist;
+    List<Users> userlist;
     int Resource;
     LayoutInflater vi;
     ViewHolder holder;
 
 
-    public UsersAdapter(Context context, int resource, ArrayList<Users> objects) {
+    public UsersAdapter(Context context, int resource, List<Users> objects) {
         super(context, resource, objects);
         vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         userlist = objects;

@@ -6,11 +6,11 @@ package com.apps.jakes.androidprogrammingchallenge;
 public class Users {
 
 
-    private String ID;
-    private String ImageID;
-    private String Title;
-    private String UserID;
-    private String UserName;
+    String ID;
+    String ImageID;
+    String Title;
+    String UserID;
+    String UserName;
 
     public Users() {
 

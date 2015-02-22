@@ -19,6 +19,7 @@ android:text="ID"/>
         android:adjustViewBounds="true"
         android:maxWidth="200dp"
         android:maxHeight="200dp"
+        android:src="@drawable/ic_launcher"
         android:scaleType="fitCenter"/>
     <TextView
         android:id="@+id/tvTitle"
