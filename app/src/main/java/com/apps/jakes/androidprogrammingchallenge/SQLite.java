@@ -55,5 +55,7 @@ public class SQLite extends SQLiteOpenHelper {
         db.execSQL(query);
 
     }
+
+
     }
 }

@@ -6,19 +6,14 @@
     android:orientation="vertical" >
 
 
-<TextView
-android:id="@+id/tvID"
-android:layout_width="10px"
-android:layout_height="10px"
-android:text="ID"/>
 
     <ImageView
         android:id="@+id/ivImageID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:maxWidth="200dp"
-        android:maxHeight="200dp"
+        android:maxWidth="400dp"
+        android:maxHeight="400dp"
         android:src="@drawable/ic_launcher"
         android:scaleType="fitCenter"/>
     <TextView
@@ -30,18 +25,8 @@ android:text="ID"/>
         android:layout_alignRight="@+id/ivImageID"
         android:layout_alignBottom="@+id/ivImageID"
         android:layout_margin="1dp"
-        android:gravity="center"
+
         android:text="Title"
         android:textColor="#000000"/>
-    <TextView
-        android:id="@+id/tvUserID"
-        android:layout_width="10px"
-        android:layout_height="10px"
-        android:text="UserID"/>
-    <TextView
-        android:id="@+id/tvUserName"
-        android:layout_width="10px"
-        android:layout_height="10px"
-        android:text="UserName"/>
 
 </RelativeLayout>

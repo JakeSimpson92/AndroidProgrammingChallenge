@@ -43,11 +43,10 @@ public class UsersAdapter extends ArrayAdapter<Users> {
             holder = new ViewHolder();
             v = vi.inflate(Resource, null);
             holder = new ViewHolder();
-            holder.tvID = (TextView)v.findViewById(R.id.tvID);
+
             holder.ivImageID = (ImageView)v.findViewById(R.id.ivImageID);
             holder.tvTitle = (TextView)v.findViewById(R.id.tvTitle);
-            holder.tvUserID = (TextView)v.findViewById(R.id.tvUserID);
-            holder.tvUserName = (TextView)v.findViewById(R.id.tvUserName);
+
 
             v.setTag(holder);
         } else {
@@ -55,12 +54,11 @@ public class UsersAdapter extends ArrayAdapter<Users> {
 
         }
 
-        holder.tvID.setText(userlist.get(position).getID());
+
         holder.ivImageID.setImageResource(R.drawable.ic_launcher);
-        new DownloadImageTask(holder.ivImageID).execute("http://challenge.superfling.com/photos/" + userlist.get(position).getImageID());
+        new DownloadImageTask(holder.ivImageID).execute("http://challenge.superfling.com/photos/" + userlist.get(position).getID());
         holder.tvTitle.setText(userlist.get(position).getTitle());
-        holder.tvUserID.setText(userlist.get(position).getUserID());
-        holder.tvUserName.setText(userlist.get(position).getUserName());
+
 
 
     return v;
@@ -68,11 +66,9 @@ public class UsersAdapter extends ArrayAdapter<Users> {
     }
 
     static class ViewHolder {
-        public TextView tvID;
         public ImageView ivImageID;
         public TextView tvTitle;
-        public TextView tvUserID;
-        public TextView tvUserName;
+
     }
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
