@@ -1,6 +1,7 @@
 package com.apps.jakes.androidprogrammingchallenge;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -73,11 +74,14 @@ public class UsersAdapter extends ArrayAdapter<Users> {
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
+
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 
         protected Bitmap doInBackground(String... urls) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+
             String urldisplay = urls[0];
             Bitmap mIcon11 = null;
             try {
@@ -87,6 +91,7 @@ public class UsersAdapter extends ArrayAdapter<Users> {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
+            //mIcon11 = mIcon11.setPixel(400,400,1);
             return mIcon11;
         }
 
